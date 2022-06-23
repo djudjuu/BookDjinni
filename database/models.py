@@ -14,8 +14,8 @@ class BookCategoryLink(SQLModel, table=True):
     book_id: Optional[int] = Field(default=None, foreign_key="book.id", primary_key=True)
     category_id: Optional[int] = Field(default=None, foreign_key="category.id", primary_key=True)
 
-    # book: "Book" = Relationship(back_populates="categories")
-    # categories: "Category" = Relationship(back_populates="books")
+    # book: "Book" = Relationship(back_populates="category_links")
+    # categories: "Category" = Relationship(back_populates="book_links")
 
 
 class Category(SQLModel, table=True):
@@ -24,7 +24,7 @@ class Category(SQLModel, table=True):
     value: str
 
     books: List["Book"] = Relationship(back_populates="categories", link_model=BookCategoryLink)
-    # books: List[BookCategoryLink] = Relationship(back_populates="categories")
+    # book_links: List[BookCategoryLink] = Relationship(back_populates="categories")
     
 
 
@@ -38,7 +38,7 @@ class Book(SQLModel, table=True):
     recommender: Optional[User] = Relationship(back_populates="books")
 
     categories: List[Category] = Relationship(back_populates="books", link_model=BookCategoryLink)
-    # categories: List[BookCategoryLink] = Relationship(back_populates="books")
+    # category_links: List[BookCategoryLink] = Relationship(back_populates="books")
 
 class Rating(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

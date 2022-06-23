@@ -5,7 +5,7 @@ from database.db import engine, create_db_and_tables
 
 def create_books_and_users():
     with Session(engine) as session:
-        # add some users using generic emails and passwords
+        # add some users using generic emails and passworddjudjuus
         user1 = User(name="John Doe", email="j@mail.com", password="password")
         user2 = User(name="Jane Doe", email="Jane@mail.com", password="password")
         # create 3 categories
@@ -23,6 +23,8 @@ def create_books_and_users():
         session.commit()
 
         print('categories of book1', book1.categories)
+
+
 
 # select all books from session
 def select_all_books():
@@ -87,6 +89,7 @@ def select_all_books_with_category_value(category_name, value):
 if __name__ == "__main__":
     try:
         delete_all_models()
+        # pass
     finally:
         create_db_and_tables()
         create_books_and_users()
