@@ -1,5 +1,5 @@
 # fastapi routes for books
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 from database import Book, User, engine, Category
 from database.models import (
     BookRead, BookCreate, BookReadWithCategories, CategoryReadWithBooks, Category, CategoryRead, CategoryReadWithBooks,
@@ -52,7 +52,26 @@ def update_book(book_id: int, book_update: BookUpdate, session = Depends(get_ses
     session.commit()
     session.refresh(db_book)
     return db_book
- 
+
+# update route to update the categories of a book
+@book_app.put("/books/{book_id}/categories", response_model=BookReadWithCategories)
+def update_book_categories(book_id: int, categories: List[int] = Body(..., embed=True), session = Depends(get_session)):
+    # get book by id from session
+    db_book = session.query(Book).filter(Book.id == book_id).first()
+    if db_book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    # update book
+    db_book.categories = []
+    for category_id in categories:
+        category = session.query(Category).filter(Category.id == category_id).first()
+        if category is None:
+            raise HTTPException(status_code=404, detail="Category not found")
+        db_book.categories.append(category)
+    session.add(db_book)
+    session.commit()
+    session.refresh(db_book)
+    return db_book
+
 # post a new book
 @book_app.post("/books", response_model=BookReadWithCategories)
 def create_book(book: BookCreate, session = Depends(get_session)):

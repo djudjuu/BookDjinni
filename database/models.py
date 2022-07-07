@@ -68,6 +68,7 @@ class BookUpdate(SQLModel):
     title: Optional[str] = None
     author: Optional[str] = None
     isbn: Optional[str] = None
+    categories: Optional[List[CategoryRead]] = None
 
 class BookReadWithCategories(BookRead):
     categories: List[CategoryRead] = []
