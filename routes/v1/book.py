@@ -80,6 +80,17 @@ def create_book(book: BookCreate, session = Depends(get_session)):
     session.refresh(db_book)
     return db_book
 
+# route to delete a book by id
+@book_app.delete("/books/{book_id}")
+def delete_book(book_id: int, session = Depends(get_session)):
+    # get book by id from session
+    db_book = session.query(Book).filter(Book.id == book_id).first()
+    if db_book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    session.delete(db_book)
+    session.commit()
+    return db_book
+
 # get endpoint to get all unique authors
 @book_app.get("/authors", response_model=List[str])
 def read_authors(session = Depends(get_session)):
