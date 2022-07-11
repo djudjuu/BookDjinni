@@ -1,5 +1,5 @@
-from typing import Optional, List
-from sqlmodel import Field, SQLModel, create_engine, Session, select, Relationship, delete
+from typing import Optional, List, Dict
+from sqlmodel import Field, SQLModel, create_engine, Session, select, Relationship, delete, JSON, Column
 
 
 class User(SQLModel, table=True):
@@ -50,12 +50,19 @@ class BookBase(SQLModel):
     author: str
     isbn: Optional[str] = None
     recommended_by: Optional[int] = Field(default=None, foreign_key="user.id")
+    data: Dict = Field(default={}, sa_column=Column(JSON))
     
 class Book(BookBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     recommender: Optional[User] = Relationship(back_populates="books")
     categories: List[Category] = Relationship(back_populates="books", link_model=BookCategoryLink)
     # category_links: List[BookCategoryLink] = Relationship(back_populates="books")
+    # add data column as jsonb for storing data
+    # data: Optional[dict] = Field(default=None)
+    # data: JSON = Field(default=None)
+
+    class Config:
+        arbitrary_types_allowed = True
 
 class BookRead(BookBase):
     id: int
@@ -69,6 +76,7 @@ class BookUpdate(SQLModel):
     author: Optional[str] = None
     isbn: Optional[str] = None
     categories: Optional[List[int]] = None
+    data: Optional[Dict] = None
 
 class BookReadWithCategories(BookRead):
     categories: List[CategoryRead] = []

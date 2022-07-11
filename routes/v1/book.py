@@ -8,6 +8,7 @@ from database.models import (
 )
 from sqlmodel import Session, select
 from typing import List
+import copy
 
 
 
@@ -50,6 +51,11 @@ def update_book(book_id: int, book_update: BookUpdate, session = Depends(get_ses
         # skip key "categories"
         if key == "categories":
             continue
+        if key == "data":
+            # weird that it works only like this and not without the deepcopy
+            new_data = copy.deepcopy(db_book.data)
+            new_data.update(value)
+            value = new_data
         setattr(db_book, key, value)
 
     # update categories
@@ -63,9 +69,11 @@ def update_book(book_id: int, book_update: BookUpdate, session = Depends(get_ses
             if category is None:
                 raise HTTPException(status_code=404, detail="Category not found")
             db_book.categories.append(category)
+    print('db before final', db_book.data)
     session.add(db_book)
     session.commit()
     session.refresh(db_book)
+    print('db final', db_book.data)
     return db_book
 
 # post a new book
