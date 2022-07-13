@@ -20,7 +20,7 @@ def get_session():
 
 @book_app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hellooo": "Worlds"}
 
 # read route to get all books
 @book_app.get("/books", response_model=List[BookReadWithCategories])

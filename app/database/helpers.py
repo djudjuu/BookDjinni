@@ -14,7 +14,7 @@ def create_books_and_users():
         scifi = Category(name="Genre", value="SciFi")
         adventure = Category(name="Genre", value="Adventure")
         # create 3 books
-        book1 = Book(title="The Alchemist", author="Paulo Coelho", isbn="123456789", recommender=user1, categories=[short, adventure])
+        book1 = Book(title="The Alchemist", author="Paulo Coelho", isbn="123456789", recommender=user1, categories=[short, adventure], data={'rating': 5, 'review': "This book is great!", "description": "A book about a book about a book"})
         book2 = Book(title="Endymion", author="Paulo Coelho", isbn="123456789", recommender=user1, categories=[long,scifi])
         book3 = Book(title="I, Robot", author="Paulo Coelho", isbn="123456789", recommender=user2, categories=[short, scifi])
         # add books to db
