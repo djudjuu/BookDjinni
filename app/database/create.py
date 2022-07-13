@@ -107,8 +107,7 @@ def reset_db(session: Session, tables=[]):
 
 if __name__ == "__main__":
     try:
-        # reset_db(session=Session(engine))
-        delete_model(model=Book)
+        reset_db(session=Session(engine))
+        # delete_model(model=Book)
     finally:
-        pass
-        # create_db_and_tables()
+        create_db_and_tables()
