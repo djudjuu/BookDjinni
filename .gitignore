@@ -1,6 +1,7 @@
 database/database.db
 database/__pycache__
 .vscode
+*/**/*.pyc
 
 # copied from https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
