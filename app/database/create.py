@@ -44,12 +44,14 @@ def select_all_books_of_user1():
         print('user1 book', user.books)
 
 # function to delete a model from the database
+# NOT WORKING
 def delete_model(model):
     with Session(engine) as session:
         session.exec(statement=delete(model))
         session.commit()
 
 # delete all models by looping over delete_model()
+# NOT WORKING
 def delete_all_models():
     for model in ALL_MODELS:
         delete_model(model=model)
@@ -86,16 +88,27 @@ def select_all_books_with_category_value(category_name, value):
         # print([b.title for b in books])
         pass
 
+def reset_db(session: Session, tables=[]):
+    # if tables is empty, delete all models
+    if not tables:
+        session.execute('TRUNCATE book, "user", category, bookcategorylink CASCADE;')
+    else:
+        for table in tables:
+            if table == "user":
+                session.execute('TRUNCATE table "user" CASCADE;') # + ", ".join(tables))
+            else: 
+                # print what table is being deleted
+                statement = f"TRUNCATE table {table} CASCADE;"
+                # print('doing', statement)
+                session.execute(statement=statement)
+    session.commit()
+
+
 
 if __name__ == "__main__":
     try:
-        delete_all_models()
-        # pass
+        # reset_db(session=Session(engine))
+        delete_model(model=Book)
     finally:
-        create_db_and_tables()
-        create_books_and_users()
-        # select_all_books_of_user1()
-        # select_all_books()
-        # select_all_titles_of_books_with_category_short()
-        # select_all_books_by_user_name("John Doe")
-        # select_all_books_with_category_value("Duration", "short")
+        pass
+        # create_db_and_tables()
