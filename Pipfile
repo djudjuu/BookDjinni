@@ -9,6 +9,8 @@ fastapi = "*"
 uvicorn = "*"
 black = "*"
 sqlalchemy = "==1.4.35"
+psycopg2-binary = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pylint = "*"

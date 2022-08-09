@@ -1,0 +1,35 @@
+services:
+  djinni_db:
+    image: postgres:14.4
+    container_name: djinni_db
+    environment:
+      - POSTGRES_USER=djinni
+      - POSTGRES_PASSWORD=djinni
+      - POSTGRES_DB=djinni
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  djinni_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: djinni_backend:latest
+    container_name: djinni_backend
+    environment:
+      - DJINNI_DB_HOST=postgres
+      - DJINNI_DB_PORT=5432
+      - DJINNI_DB_USER=djini
+      - DJINNI_DB_PASSWORD=djinni
+      - DJINNI_DB_NAME=djinni
+      - DJINNI_PORT=8080
+      - DJINNI_HOST=djinni_db
+      # - DJINNI_DEBUG=true
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      # bind mount to local directory -> not working
+      # - ./app:/code/app
+    ports:
+      - "8080:8080"
