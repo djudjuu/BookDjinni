@@ -26,6 +26,7 @@ services:
       - DJINNI_DB_NAME=djinni
       - DJINNI_PORT=8080
       - DJINNI_HOST=djinni_db
+      - FRONTEND_URL=http://books.djudju.tech
       # - DJINNI_DEBUG=true
     volumes:
       - ./data/postgres:/var/lib/postgresql/data

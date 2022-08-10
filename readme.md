@@ -9,9 +9,9 @@ $ jq -r '.default
 
 ## a docker container
 
-$ docker-compose up
+$ docker-compose up -d
 
-to start both backend & frontend in a container
+to start both backend & db in a container
 
 TODO: not sure about the environment variables being loaded from a .env file or whether they are being passed in -> for now its hardcoded
 
@@ -25,7 +25,7 @@ $ cd app
 
 $ uvicorn main:app --reload --port
 
-# development inside the container
+# development inside the container [BROKEN]
 
 do a bind mount to have the container be built around the app-directory
 
