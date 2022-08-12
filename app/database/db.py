@@ -7,6 +7,8 @@ load_dotenv()
 # when using sqlite
 # sqlite_file_name = "database/database.db"
 # sqlite_url = f"sqlite:///{sqlite_file_name}"
+# connect_args = {"check_same_thread": False}
+# engine = create_engine(sqlite_url, echo=False, connect_args=connect_args)
 
 # load from .env => not sure whether this is really happening
 # POSTGRES_USER = os.getenv("POSTGRES_USER")
@@ -19,17 +21,13 @@ load_dotenv()
 # )
 
 # for developemnt when api is run locally
-# postgres_url = "postgresql://djinni:djinni@localhost:5432/djinni"
+# POSTGRES_URL = "postgresql://djinni:djinni@localhost:5432/djinni"
 
 # for developemnt when api is run in container
 POSTGRES_URL = "postgresql://djinni:djinni@djinni_db:5432/djinni"
 
-# TODO look up how to use this
-connect_args = {"check_same_thread": False}
-
 print("POSTGRES_URL", POSTGRES_URL)
-# engine = create_engine(sqlite_url, echo=False, connect_args=connect_args)
-engine = create_engine(POSTGRES_URL, echo=True)
+engine = create_engine(POSTGRES_URL, echo=False)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
