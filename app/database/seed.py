@@ -9,14 +9,49 @@ def create_books_and_users():
         user1 = User(name="John Doe", email="j@mail.com", password="password")
         user2 = User(name="Jane Doe", email="Jane@mail.com", password="password")
         # create 3 categories
+        # duration
         long = Category(name="Duration", value="long")
+        medium_length = Category(name="Duration", value="medium length")
+        epic = Category(name="Duration", value="epic")
         short = Category(name="Duration", value="short")
+
+        # genre
         scifi = Category(name="Genre", value="SciFi")
         adventure = Category(name="Genre", value="Adventure")
+        bio = Category(name="Genre", value="Biography")
+
+        # language
+        english = Category(name="Language", value="English")
+        german = Category(name="Language", value="German")
+        portuguese = Category(name="Language", value="Portuguese")
+        french = Category(name="Language", value="French")
+
+        # hero types
+        human = Category(name="Hero", value="Human")
+        spider = Category(name="Hero", value="Spider")
+        dog = Category(name="Hero", value="Dog")
+        kid = Category(name="Hero", value="Kid")
+        cat = Category(name="Hero", value="Cat")
+        elephant = Category(name="Hero", value="Elephant")
+        emperor = Category(name="Hero", value="Emperor of Rome")
+        nature = Category(name="Hero", value="Force of Nature")
+        bear = Category(name="Hero", value="Bear")
+        bear = Category(name="Hero", value="Robot")
+
+        # kick
+        beautiful = Category(name="Kick", value="beautiful language")
+        world = Category(name="Kick", value="different world")
+        lifehack = Category(name="Kick", value="lifehack")
+        reality = Category(name="Kick", value="reality")
+        character = Category(name="Kick", value="character development")
+
+        for category in [human, spider, dog, kid, cat, elephant, emperor, nature, bear, beautiful, world, lifehack, reality, character]:
+            session.add(category)
+
         # create 3 books
         book1 = Book(title="The Alchemist", author="Paulo Coelho", isbn="123456789", recommender=user1, categories=[short, adventure], data={'rating': 5, 'review': "This book is great!", "description": "A book about a book about a book"})
-        book2 = Book(title="Endymion", author="Paulo Coelho", isbn="123456789", recommender=user1, categories=[long,scifi])
-        book3 = Book(title="I, Robot", author="Paulo Coelho", isbn="123456789", recommender=user2, categories=[short, scifi])
+        book2 = Book(title="Endymion", author="Dan Simmons", isbn="123456789", recommender=user1, categories=[long,scifi])
+        book3 = Book(title="I, Robot", author="Isaac Asimov", isbn="123456789", recommender=user2, categories=[short, scifi])
         # add books to db
         session.add(book1)
         session.add(book2)
