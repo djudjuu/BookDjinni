@@ -18,8 +18,15 @@ TODO: not sure about the environment variables being loaded from a .env file or 
 # local development
 
 activate virtualenv
-
 $ pipenv shell
+
+start local db
+$ docker-compose up -d djinni_db
+
+create db & seed it
+
+$ python -m database.create
+$ python -m database.seed
 
 $ cd app
 
