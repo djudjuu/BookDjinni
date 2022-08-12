@@ -79,8 +79,8 @@ def update_book(book_id: int, book_update: BookUpdate, session = Depends(get_ses
 # post a new book
 @book_app.post("/books", response_model=BookReadWithCategories)
 def create_book(book: BookCreate, session = Depends(get_session)):
-    if not book.recommended_by:
-        book.recommended_by = 1
+    # if not book.recommended_by:
+        # book.recommended_by = 1
     db_book = Book.from_orm(book)
     # TODO check if a similar book already exists, check title and author
     session.add(db_book)
