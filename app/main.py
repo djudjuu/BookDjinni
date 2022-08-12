@@ -3,22 +3,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import create_db_and_tables, engine, Book, User, Category
 import os
-
-# allow origins from localhost:3000
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
 # load from .env -> not working in container
 # FRONTEND_URL = os.getenv("FRONTEND_URL")
-# local dev
-# FRONTEND_URL  = ["http://localhost:3000"]
-# hack for now
-FRONTEND_URL  = ["*"]
-
+FRONTEND_URL  = "http://localhost:3000"
 origins = [
     FRONTEND_URL
 ]
+
+# hack for now
+origins  = ["*"]
 
 app = FastAPI()
 
