@@ -44,7 +44,7 @@ def update_book(book_id: int, book_update: BookUpdate, session = Depends(get_ses
     # get book by id from session
     db_book = session.query(Book).filter(Book.id == book_id).first()
     if db_book is None:
-        raise HTTPException(status_code=404, detail="Book not found")
+        raise HTTPException(status_code=404, detail=f"Book with {book_id} not found")
     # update book-attributes
     book_data = book_update.dict(exclude_unset=True)
     for key, value in book_data.items():
@@ -67,7 +67,7 @@ def update_book(book_id: int, book_update: BookUpdate, session = Depends(get_ses
         for category_id in categories:
             category = session.query(Category).filter(Category.id == category_id).first()
             if category is None:
-                raise HTTPException(status_code=404, detail="Category not found")
+                raise HTTPException(status_code=404, detail=f"Category {category_id} not found")
             db_book.categories.append(category)
     print('db before final', db_book.data)
     session.add(db_book)
