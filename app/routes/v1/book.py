@@ -82,6 +82,19 @@ def create_book(book: BookCreate, session = Depends(get_session)):
     # if not book.recommended_by:
         # book.recommended_by = 1
     db_book = Book.from_orm(book)
+
+    # add categories
+    categories = book.categories
+    if categories is not None:
+        # delete all categories from book
+        db_book.categories = []
+        # add categories to book
+        for category_id in categories:
+            category = session.query(Category).filter(Category.id == category_id).first()
+            if category is None:
+                raise HTTPException(status_code=404, detail=f"Category {category_id} not found")
+            db_book.categories.append(category)
+
     # TODO check if a similar book already exists, check title and author
     session.add(db_book)
     session.commit()

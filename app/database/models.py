@@ -68,7 +68,7 @@ class BookRead(BookBase):
     id: int
 
 class BookCreate(BookBase):
-    pass
+    categories: Optional[List[int]] = None
 
 # class BookUpdate with all fields optional defaulting to None
 class BookUpdate(SQLModel):
