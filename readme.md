@@ -1,3 +1,11 @@
+# Book Djinni
+
+A personal miniproject to allow my friend and family to conveniently browse my favorite books.
+_My plan is to implement this with different stacks (python + fastapi vs graphql + apollo, svelte vs react) to find my favorite combination. This is the python+fastapi version_
+
+- postgres db to store my favorite books and assign them categories, descriptions, comments
+- serve and update db-content via fastapi routes, using [SQLModel](https://sqlmodel.tiangolo.com/) to define the DB-schema _and_ the API-data-formats [at the same time](/app/database/models.py)
+
 # deploying
 
 create the requirements from the Pipfile with [jq](https://stedolan.github.io/jq/) like this
